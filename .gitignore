@@ -1,0 +1,7 @@
+# Dotenv file
+.env
+
+# Editor files
+.idea
+.vscode
+node_modules
