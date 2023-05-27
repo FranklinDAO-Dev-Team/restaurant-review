@@ -42,38 +42,74 @@ describe("RestaurantReview", () => {
       const { restaurantReview } = await loadFixture(deployRestaurantReview);
 
       await expect(
-        restaurantReview.createRestaurant("Philippines", "Manila", "Jollibee")
+        restaurantReview.createRestaurant(
+          "Philippines",
+          "Manila",
+          "Test Address",
+          "Jollibee"
+        )
       )
         .to.emit(restaurantReview, "RestaurantCreated")
-        .withArgs(0, "Philippines", "Manila", "Jollibee");
+        .withArgs(0, "Philippines", "Manila", "Test Address", "Jollibee");
 
       expect(await restaurantReview.getNumberOfRestaurants()).to.equal(1);
 
       const restaurant = await restaurantReview.getRestaurantById(0);
       expect(restaurant.country).to.equal("Philippines");
       expect(restaurant.city).to.equal("Manila");
+      expect(restaurant.restaurantAddress).to.equal("Test Address");
       expect(restaurant.restaurantName).to.equal("Jollibee");
     });
 
     describe("Validation", () => {
-      it("Should not create a restaurant with an Missing country", async () => {
+      it("Should not create a restaurant with an missing country", async () => {
         const { restaurantReview } = await loadFixture(deployRestaurantReview);
         await expect(
-          restaurantReview.createRestaurant("", "Manila", "Jollibee")
+          restaurantReview.createRestaurant(
+            "",
+            "Manila",
+            "Test Address",
+            "Jollibee"
+          )
         ).to.be.revertedWithCustomError(restaurantReview, "MissingCountry");
       });
 
-      it("Should not create a restaurant with an Missing city", async () => {
+      it("Should not create a restaurant with an missing city", async () => {
         const { restaurantReview } = await loadFixture(deployRestaurantReview);
         await expect(
-          restaurantReview.createRestaurant("Philippines", "", "Jollibee")
+          restaurantReview.createRestaurant(
+            "Philippines",
+            "",
+            "Test Address",
+            "Jollibee"
+          )
         ).to.be.revertedWithCustomError(restaurantReview, "MissingCity");
       });
 
-      it("Should not create a restaurant with an Missing restaurant name", async () => {
+      it("Should not create a restaurant with an missing address", async () => {
         const { restaurantReview } = await loadFixture(deployRestaurantReview);
         await expect(
-          restaurantReview.createRestaurant("Philippines", "Manila", "")
+          restaurantReview.createRestaurant(
+            "Philippines",
+            "Manila",
+            "",
+            "Jollibee"
+          )
+        ).to.be.revertedWithCustomError(
+          restaurantReview,
+          "MissingRestaurantAddress"
+        );
+      });
+
+      it("Should not create a restaurant with an missing restaurant name", async () => {
+        const { restaurantReview } = await loadFixture(deployRestaurantReview);
+        await expect(
+          restaurantReview.createRestaurant(
+            "Philippines",
+            "Manila",
+            "Test Address",
+            ""
+          )
         ).to.be.revertedWithCustomError(
           restaurantReview,
           "MissingRestaurantName"
@@ -95,6 +131,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
 
@@ -107,16 +144,19 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createRestaurant(
           "Canada",
           "Vancouver",
+          "Test Address 2",
           "Tim Hortons"
         );
         await restaurantReview.createRestaurant(
           "USA",
           "New York",
+          "Test Address 3",
           "Burger King"
         );
 
@@ -138,12 +178,14 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
 
         const restaurant = await restaurantReview.getRestaurantById(0);
         expect(restaurant.country).to.equal("Philippines");
         expect(restaurant.city).to.equal("Manila");
+        expect(restaurant.restaurantAddress).to.equal("Test Address");
         expect(restaurant.restaurantName).to.equal("Jollibee");
 
         await expect(
@@ -157,32 +199,38 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createRestaurant(
           "Canada",
           "Vancouver",
+          "Test Address 2",
           "Tim Hortons"
         );
         await restaurantReview.createRestaurant(
           "USA",
           "New York",
+          "Test Address 3",
           "Burger King"
         );
 
         const restaurant1 = await restaurantReview.getRestaurantById(0);
         expect(restaurant1.country).to.equal("Philippines");
         expect(restaurant1.city).to.equal("Manila");
+        expect(restaurant1.restaurantAddress).to.equal("Test Address");
         expect(restaurant1.restaurantName).to.equal("Jollibee");
 
         const restaurant2 = await restaurantReview.getRestaurantById(1);
         expect(restaurant2.country).to.equal("Canada");
         expect(restaurant2.city).to.equal("Vancouver");
+        expect(restaurant2.restaurantAddress).to.equal("Test Address 2");
         expect(restaurant2.restaurantName).to.equal("Tim Hortons");
 
         const restaurant3 = await restaurantReview.getRestaurantById(2);
         expect(restaurant3.country).to.equal("USA");
         expect(restaurant3.city).to.equal("New York");
+        expect(restaurant3.restaurantAddress).to.equal("Test Address 3");
         expect(restaurant3.restaurantName).to.equal("Burger King");
 
         await expect(
@@ -201,6 +249,7 @@ describe("RestaurantReview", () => {
       await restaurantReview.createRestaurant(
         "Philippines",
         "Manila",
+        "Test Address",
         "Jollibee"
       );
 
@@ -232,6 +281,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
 
@@ -246,6 +296,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
 
@@ -254,7 +305,7 @@ describe("RestaurantReview", () => {
         ).to.be.revertedWithCustomError(restaurantReview, "InvalidRating");
       });
 
-      it("Should create a review with an Missing comment", async () => {
+      it("Should create a review with an missing comment", async () => {
         const { restaurantReview, accounts } = await loadFixture(
           deployRestaurantReview
         );
@@ -262,6 +313,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
 
@@ -287,6 +339,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createReview(0, 5, "Good food");
@@ -299,14 +352,21 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createRestaurant(
           "Canada",
           "Vancouver",
+          "Test Address 2",
           "Tim Hortons"
         );
-        await restaurantReview.createRestaurant("USA", "New York", "McDonalds");
+        await restaurantReview.createRestaurant(
+          "USA",
+          "New York",
+          "Test Address 3",
+          "McDonalds"
+        );
 
         await restaurantReview.createReview(0, 5, "Good food");
         await restaurantReview.createReview(1, 4, "Solid");
@@ -331,6 +391,7 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createReview(0, 5, "Good food");
@@ -350,14 +411,21 @@ describe("RestaurantReview", () => {
         await restaurantReview.createRestaurant(
           "Philippines",
           "Manila",
+          "Test Address",
           "Jollibee"
         );
         await restaurantReview.createRestaurant(
           "Canada",
           "Vancouver",
+          "Test Address 2",
           "Tim Hortons"
         );
-        await restaurantReview.createRestaurant("USA", "New York", "McDonalds");
+        await restaurantReview.createRestaurant(
+          "USA",
+          "New York",
+          "Test Address 3",
+          "McDonalds"
+        );
 
         await restaurantReview.createReview(0, 5, "Good food");
         await restaurantReview.connect(accounts[1]).createReview(1, 4, "Solid");
@@ -396,13 +464,14 @@ describe("RestaurantReview", () => {
           .createRestaurantAndReview(
             "Philippines",
             "Manila",
+            "Test Address",
             "Jolibee",
             5,
             "Good food"
           )
       )
         .to.emit(restaurantReview, "RestaurantCreated")
-        .withArgs(0, "Philippines", "Manila", "Jolibee")
+        .withArgs(0, "Philippines", "Manila", "Test Address", "Jolibee")
         .to.emit(restaurantReview, "ReviewCreated")
         .withArgs(0, accounts[1].address, 0, 5, "Good food");
     });
@@ -416,7 +485,14 @@ describe("RestaurantReview", () => {
         await expect(
           restaurantReview
             .connect(accounts[1])
-            .createRestaurantAndReview("", "Manila", "Jolibee", 5, "Good food")
+            .createRestaurantAndReview(
+              "",
+              "Manila",
+              "Test Address",
+              "Jolibee",
+              5,
+              "Good food"
+            )
         ).to.be.revertedWithCustomError(restaurantReview, "MissingCountry");
 
         expect(await restaurantReview.getNumberOfRestaurants()).to.equal(0);
@@ -434,11 +510,37 @@ describe("RestaurantReview", () => {
             .createRestaurantAndReview(
               "Philippines",
               "",
+              "Test Address",
               "Jolibee",
               5,
               "Good food"
             )
         ).to.be.revertedWithCustomError(restaurantReview, "MissingCity");
+
+        expect(await restaurantReview.getNumberOfRestaurants()).to.equal(0);
+        expect(await restaurantReview.getNumberOfReviews()).to.equal(0);
+      });
+
+      it("Should not create a restaurant and review with a missing address", async () => {
+        const { restaurantReview, accounts } = await loadFixture(
+          deployRestaurantReview
+        );
+
+        await expect(
+          restaurantReview
+            .connect(accounts[1])
+            .createRestaurantAndReview(
+              "Philippines",
+              "Manila",
+              "",
+              "Jolibee",
+              5,
+              "Good food"
+            )
+        ).to.be.revertedWithCustomError(
+          restaurantReview,
+          "MissingRestaurantAddress"
+        );
 
         expect(await restaurantReview.getNumberOfRestaurants()).to.equal(0);
         expect(await restaurantReview.getNumberOfReviews()).to.equal(0);
@@ -455,6 +557,7 @@ describe("RestaurantReview", () => {
             .createRestaurantAndReview(
               "Philippines",
               "Manila",
+              "Test Address",
               "",
               5,
               "Good food"
@@ -479,6 +582,7 @@ describe("RestaurantReview", () => {
             .createRestaurantAndReview(
               "Philippines",
               "Manila",
+              "Test Address",
               "Jolibee",
               0,
               "Good food"
@@ -500,19 +604,21 @@ describe("RestaurantReview", () => {
             .createRestaurantAndReview(
               "Philippines",
               "Manila",
+              "Test Address",
               "Jolibee",
               5,
               ""
             )
         )
           .to.emit(restaurantReview, "RestaurantCreated")
-          .withArgs(0, "Philippines", "Manila", "Jolibee")
+          .withArgs(0, "Philippines", "Manila", "Test Address", "Jolibee")
           .to.emit(restaurantReview, "ReviewCreated")
           .withArgs(0, accounts[1].address, 0, 5, "");
 
         const restaurant = await restaurantReview.getRestaurantById(0);
         expect(restaurant.country).to.equal("Philippines");
         expect(restaurant.city).to.equal("Manila");
+        expect(restaurant.restaurantAddress).to.equal("Test Address");
         expect(restaurant.restaurantName).to.equal("Jolibee");
 
         const review = await restaurantReview.getReviewById(0);

@@ -7,6 +7,7 @@ import "./IRestaurantReview.sol";
 
 error MissingCountry();
 error MissingCity();
+error MissingRestaurantAddress();
 error MissingRestaurantName();
 error InvalidRating();
 error InvalidIndex();
@@ -18,7 +19,7 @@ contract RestaurantReview is IRestaurantReview {
     uint public minRating;
     uint public maxRating;
 
-    event RestaurantCreated(uint indexed _id, string _country, string _city, string _restaurantName);
+    event RestaurantCreated(uint indexed _id, string _country, string _city, string _restaurantAddress, string _restaurantName);
     event ReviewCreated(uint indexed _id, address indexed _from, uint _restuarantId, uint _rating, string _metadata);
 
     constructor(uint _minRating, uint _maxRating) {
@@ -26,13 +27,14 @@ contract RestaurantReview is IRestaurantReview {
         maxRating = _maxRating;
     }
 
-    function createRestaurant(string memory _country, string memory _city, string memory _restaurantName) public override returns (uint) {
+    function createRestaurant(string memory _country, string memory _city, string memory _restaurantAddress, string memory _restaurantName) public returns (uint) {
         if (bytes(_country).length == 0) revert MissingCountry();
         if (bytes(_city).length == 0) revert MissingCity();
+        if (bytes(_restaurantAddress).length == 0) revert MissingRestaurantAddress();
         if (bytes(_restaurantName).length == 0) revert MissingRestaurantName();
 
-        restaurants.push(Restaurant(_country, _city, _restaurantName));
-        emit RestaurantCreated(restaurants.length - 1, _country, _city, _restaurantName);
+        restaurants.push(Restaurant(_country, _city, _restaurantAddress, _restaurantName));
+        emit RestaurantCreated(restaurants.length - 1, _country, _city, _restaurantAddress, _restaurantName);
         return restaurants.length - 1;
     }
 
@@ -65,8 +67,8 @@ contract RestaurantReview is IRestaurantReview {
         return reviews[_id];
     }
 
-    function createRestaurantAndReview(string memory _country, string memory _city, string memory _restaurantName, uint _rating, string memory _metadata) external returns (uint, uint) {
-        uint restaurantId = createRestaurant(_country, _city, _restaurantName);
+    function createRestaurantAndReview(string memory _country, string memory _city, string memory _restaurantAddress, string memory _restaurantName, uint _rating, string memory _metadata) external returns (uint, uint) {
+        uint restaurantId = createRestaurant(_country, _city, _restaurantAddress, _restaurantName);
         uint reviewId = createReview(restaurantId, _rating, _metadata);
         return (restaurantId, reviewId);   
     }

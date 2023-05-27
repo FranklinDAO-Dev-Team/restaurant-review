@@ -4,5 +4,6 @@ pragma solidity ^0.8.13;
 struct Restaurant {
     string country;
     string city;
+    string restaurantAddress;
     string restaurantName;
 }
