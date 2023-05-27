@@ -3,9 +3,7 @@ pragma solidity ^0.8.13;
 
 struct Review {
     address reviewer;
-    string country;
-    string city;
-    string restaurantName;
+    uint restaurantId;
     uint rating;
-    string comment;
+    string metadata;
 }
