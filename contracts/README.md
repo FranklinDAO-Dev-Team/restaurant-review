@@ -1,13 +1,23 @@
-# Sample Hardhat Project
+# Smart Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This directory contains the smart contracts for the dApp.
 
-Try running some of the following tasks:
+### Usage
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+To compile the contracts, run:
+
+```bash
+$ npx hardhat build
+```
+
+To run the tests, run:
+
+```bash
+$ npx hardhat test
+```
+
+To deploy the contracts locally, run:
+
+```bash
+$ npx hardhat deploy
 ```

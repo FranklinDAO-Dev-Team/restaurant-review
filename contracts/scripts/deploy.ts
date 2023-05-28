@@ -30,7 +30,7 @@ async function main() {
     .connect(accounts[1])
     .createRestaurantAndReview(
       "Canada",
-      "Toronto",
+      "Vancouver",
       "Test Address 2",
       "Tim Hortons",
       4,
@@ -43,7 +43,7 @@ async function main() {
       "USA",
       "New York",
       "Test Address 3",
-      "McDonalds",
+      "Burger King",
       3,
       "Meh"
     );
