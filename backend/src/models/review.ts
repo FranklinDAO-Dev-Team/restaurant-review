@@ -2,6 +2,7 @@ import { getDb } from "../utils/database";
 
 interface Review {
   id: number;
+  reviewer: string;
   restaurantId: number;
   rating: number;
   metadata: string;
@@ -9,11 +10,12 @@ interface Review {
 
 const createReviewInDb = async (review: Review) => {
   const query = `
-INSERT OR IGNORE INTO reviews (id, restaurantId, rating, metadata)
-VALUES (?, ?, ?, ?)
+INSERT OR IGNORE INTO reviews (id, reviewer, restaurantId, rating, metadata)
+VALUES (?, ?, ?, ?, ?)
     `;
   const result = await getDb().run(query, [
     review.id,
+    review.reviewer,
     review.restaurantId,
     review.rating,
     review.metadata,

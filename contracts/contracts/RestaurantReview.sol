@@ -23,7 +23,7 @@ contract RestaurantReview is IRestaurantReview {
 
     event CityCreated(uint indexed _id, string _countryName, string _cityName);
     event RestaurantCreated(uint indexed _id, uint _cityId, string _restaurantAddress, string _restaurantName);
-    event ReviewCreated(uint indexed _id, address indexed _from, uint _restuarantId, uint _rating, string _metadata);
+    event ReviewCreated(uint indexed _id, address indexed _reviewer, uint _restuarantId, uint _rating, string _metadata);
 
     constructor(uint _minRating, uint _maxRating) {
         minRating = _minRating;
