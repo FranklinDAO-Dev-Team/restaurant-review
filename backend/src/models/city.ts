@@ -26,18 +26,18 @@ FROM cities
 ORDER BY countryName ASC
     `;
   const result = await getDb().all(query);
-  return result;
+  return result.map((row) => row.countryName);
 };
 
-const getAllCitiesByCountryNameFromDb = async (country: string) => {
+const getAllCitiesByCountryNameFromDb = async (countryName: string) => {
   const query = `
 SELECT DISTINCT cityName
 FROM cities
 WHERE countryName = ?
 ORDER BY cityName ASC
     `;
-  const result = await getDb().all(query, [country]);
-  return result;
+  const result = await getDb().all(query, [countryName]);
+  return result.map((row) => row.cityName);
 };
 
 export {

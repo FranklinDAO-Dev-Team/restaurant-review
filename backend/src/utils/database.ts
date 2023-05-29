@@ -17,8 +17,8 @@ const main = async () => {
   const cityQuery = `
 CREATE TABLE IF NOT EXISTS cities (
   id INTEGER PRIMARY KEY,
-  countryName text,
-  cityName text
+  countryName text NOT NULL,
+  cityName text NOT NULL
 )
   `;
   await db.run(cityQuery);
@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS cities (
   const restaurantQuery = `
 CREATE TABLE IF NOT EXISTS restaurants (
   id INTEGER PRIMARY KEY,
-  cityId INTEGER,
-  restaurantAddress text,
-  restaurantName text,
+  cityId INTEGER NOT NULL,
+  restaurantAddress text NOT NULL,
+  restaurantName text NOT NULL,
   FOREIGN KEY (cityId) REFERENCES cities(id)
 )
 `;
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS restaurants (
   const reviewQuery = `
 CREATE TABLE IF NOT EXISTS reviews (
   id INTEGER PRIMARY KEY,
-  restaurantId INTEGER,
-  reviewer text,
-  rating INTEGER,
+  restaurantId INTEGER NOT NULL,
+  reviewer text NOT NULL,
+  rating INTEGER NOT NULL,
   metadata text,
   FOREIGN KEY (restaurantId) REFERENCES restaurants(id)
 )

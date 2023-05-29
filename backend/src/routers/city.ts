@@ -3,6 +3,6 @@ import { getAllCitiesByCountryName } from "../controllers/city";
 
 const cityRouter = Router();
 
-cityRouter.get("/:country", getAllCitiesByCountryName);
+cityRouter.get("/:countryName", getAllCitiesByCountryName);
 
 export { cityRouter };

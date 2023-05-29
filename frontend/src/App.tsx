@@ -1,11 +1,23 @@
-import { useState } from "react";
 import { Box, Container, Paper, Typography } from "@mui/material";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "../public/vite.svg";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home/Home.tsx";
+import Header from "./components/Header.tsx";
+import City from "./pages/City/City.tsx";
+import { cityLoader } from "./pages/City/loader";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/:countryName/:cityName",
+    element: <City />,
+    loader: cityLoader,
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Box
       sx={{
@@ -26,18 +38,11 @@ function App() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          rowGap: "2rem",
         }}
       >
-        <Paper
-          sx={{
-            width: "fit-content",
-            padding: "1rem",
-          }}
-        >
-          <Typography variant="h2" fontWeight="bold">
-            Restaurant Review 🥘
-          </Typography>
-        </Paper>
+        <Header />
+        <RouterProvider router={router} />
       </Container>
     </Box>
   );

@@ -6,9 +6,9 @@ import { cityRouter } from "./city";
 
 const router = Router();
 
-router.use("/country", countryRouter);
-router.use("/city", cityRouter);
-router.use("/restaurant", restaurantRouter);
-router.use("/review", reviewRouter);
+router.use("/countries", countryRouter);
+router.use("/cities", cityRouter);
+router.use("/restaurants", restaurantRouter);
+router.use("/reviews", reviewRouter);
 
 export { router };

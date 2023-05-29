@@ -47,7 +47,7 @@ const loadRestaurant = async (id: number) => {
   );
   createRestaurantInDb({
     id: id,
-    cityId: restaurant[0],
+    cityId: Number(restaurant[0]),
     restaurantAddress: restaurant[1],
     restaurantName: restaurant[2],
   });
@@ -61,8 +61,8 @@ const loadReview = async (id: number) => {
   createReviewInDb({
     id: id,
     reviewer: review[0],
-    restaurantId: review[1],
-    rating: review[2],
+    restaurantId: Number(review[1]),
+    rating: Number(review[2]),
     metadata: review[3],
   });
 };
@@ -102,10 +102,10 @@ const listenToNewData = async () => {
 
   restaurantReviewContract.on(
     "CityCreated",
-    (id: number, countryName: string, cityName: string) => {
+    (id: bigint, countryName: string, cityName: string) => {
       console.log(`Received new city ${id}: ${countryName}, ${cityName}`);
       createCityInDb({
-        id: id,
+        id: Number(id),
         countryName: countryName,
         cityName: cityName,
       });
@@ -115,8 +115,8 @@ const listenToNewData = async () => {
   restaurantReviewContract.on(
     "RestaurantCreated",
     (
-      id: number,
-      cityId: number,
+      id: bigint,
+      cityId: bigint,
       restaurantAddress: string,
       restaurantName: string
     ) => {
@@ -124,8 +124,8 @@ const listenToNewData = async () => {
         `Received new restaurant ${id}: City #${cityId}, ${restaurantAddress}, ${restaurantName}`
       );
       createRestaurantInDb({
-        id: id,
-        cityId: cityId,
+        id: Number(id),
+        cityId: Number(cityId),
         restaurantAddress: restaurantAddress,
         restaurantName: restaurantName,
       });
@@ -135,20 +135,20 @@ const listenToNewData = async () => {
   restaurantReviewContract.on(
     "ReviewCreated",
     (
-      id: number,
+      id: bigint,
       reviewer: string,
-      restaurantId: number,
-      rating: number,
+      restaurantId: bigint,
+      rating: bigint,
       metadata: string
     ) => {
       console.log(
         `Received new review ${id}: Restaurant #${restaurantId}, ${reviewer}, ${rating}, ${metadata}`
       );
       createReviewInDb({
-        id: id,
+        id: Number(id),
         reviewer: reviewer,
-        restaurantId: restaurantId,
-        rating: rating,
+        restaurantId: Number(restaurantId),
+        rating: Number(rating),
         metadata: metadata,
       });
     }

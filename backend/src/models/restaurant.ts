@@ -22,16 +22,24 @@ VALUES (?, ?, ?, ?)
   return result.lastID;
 };
 
-const getRestaurantsByCityIdFromDb = async (cityId: number) => {
+const getRestaurantsByCountryAndCityNameFromDb = async (
+  countryName: string,
+  cityName: string
+) => {
   const query = `
 SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, AVG(reviews.rating) as averageRating
 FROM restaurants
-INNER JOIN reviews ON restaurants.id = reviews.restaurantId
-WHERE restaurants.cityId = ?
+JOIN reviews ON restaurants.id = reviews.restaurantId
+JOIN cities ON restaurants.cityId = cities.id
+WHERE cities.countryName = ? AND cities.cityName = ?
 GROUP BY restaurants.id
     `;
-  const result = await getDb().all(query, [cityId]);
+  const result = await getDb().all(query, [countryName, cityName]);
   return result as Restaurant[];
 };
 
-export { Restaurant, createRestaurantInDb, getRestaurantsByCityIdFromDb };
+export {
+  Restaurant,
+  createRestaurantInDb,
+  getRestaurantsByCountryAndCityNameFromDb,
+};
