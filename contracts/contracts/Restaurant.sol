@@ -2,8 +2,7 @@
 pragma solidity ^0.8.13;
 
 struct Restaurant {
-    string country;
-    string city;
+    uint cityId;
     string restaurantAddress;
     string restaurantName;
 }

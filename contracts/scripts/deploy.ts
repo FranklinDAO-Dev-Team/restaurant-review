@@ -17,7 +17,7 @@ async function main() {
 
   await restaurantReview
     .connect(accounts[0])
-    .createRestaurantAndReview(
+    .createCityRestaurantAndReview(
       "Philippines",
       "Manila",
       "Test Address",
@@ -28,7 +28,7 @@ async function main() {
 
   await restaurantReview
     .connect(accounts[1])
-    .createRestaurantAndReview(
+    .createCityRestaurantAndReview(
       "Canada",
       "Vancouver",
       "Test Address 2",
@@ -39,7 +39,7 @@ async function main() {
 
   await restaurantReview
     .connect(accounts[2])
-    .createRestaurantAndReview(
+    .createCityRestaurantAndReview(
       "USA",
       "New York",
       "Test Address 3",
