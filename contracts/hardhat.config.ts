@@ -7,6 +7,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 1337,
     },
+    node: {
+      chainId: 1337,
+      url: "http://node:8545",
+    },
   },
 };
 
