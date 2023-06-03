@@ -1,13 +1,13 @@
 [
     {
         "name": "Flame Restaurant",
-        "address": "H23G+CR6, Makati, Metro Manila, Philippines",
+        "address": "16F, 6749 Ayala Ave, Makati, Metro Manila, Philippines",
         "rating": 5,
         "review": "Great food and service! Check out the outdoor bar if it's open!"
     },
     {
         "name": "Mendokoro Ramenba Makati",
-        "address": "Unit 14 & 15, V Corporate Center, Salcedo Village, Soliman, Makati, 1209 Metro Manila, Philippines",
+        "address": "125 L.P.Leviste Street, Makati, 1227 Metro Manila, Philippines",
         "rating": 5,
         "review": "Best ramen in the Philippines!"
     },
@@ -37,7 +37,7 @@
     },
     {
         "name": "Tsukiji",
-        "address": "3/F, Milky Way Building, Makati, Metro Manila, Philippines",
+        "address": "3F, Milky Way Building, 900 Antonio Arnaiz Ave, Makati, Metro Manila, Philippines",
         "rating": 4,
         "review": "Best all-around Japanese food. Get the sushi and lunch specials!"
     },

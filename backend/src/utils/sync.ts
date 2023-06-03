@@ -30,13 +30,26 @@ const setup = () => {
   );
 };
 
+const getCoordinates = async (address: string): Promise<number[]> => {
+  const response = await fetch(
+    `${process.env.MAPBOX_URL}/geocoding/v5/mapbox.places/${address}.json?access_token=${process.env.MAPBOX_TOKEN}`
+  );
+
+  const data = await response.json();
+  const location = data.features[0].center;
+  return location;
+};
+
 const loadCity = async (id: number) => {
   const city = await restaurantReviewContract.getCityById(id);
   console.log(`Loading city ${id}: ${city[0]}, ${city[1]}`);
+  const location = await getCoordinates(`${city[1]}, ${city[0]}`);
   createCityInDb({
     id: id,
     countryName: city[0],
     cityName: city[1],
+    longitude: location[0],
+    latitude: location[1],
   });
 };
 
@@ -45,11 +58,14 @@ const loadRestaurant = async (id: number) => {
   console.log(
     `Loading restaurant ${id}: City #${restaurant[0]}, ${restaurant[1]}, ${restaurant[2]}`
   );
+  const location = await getCoordinates(`${restaurant[2]}, ${restaurant[1]}`);
   createRestaurantInDb({
     id: id,
     cityId: Number(restaurant[0]),
     restaurantAddress: restaurant[1],
     restaurantName: restaurant[2],
+    longitude: location[0],
+    latitude: location[1],
   });
 };
 
@@ -102,19 +118,22 @@ const listenToNewData = async () => {
 
   restaurantReviewContract.on(
     "CityCreated",
-    (id: bigint, countryName: string, cityName: string) => {
+    async (id: bigint, countryName: string, cityName: string) => {
       console.log(`Received new city ${id}: ${countryName}, ${cityName}`);
+      const location = await getCoordinates(`${cityName}, ${countryName}`);
       createCityInDb({
         id: Number(id),
         countryName: countryName,
         cityName: cityName,
+        longitude: location[0],
+        latitude: location[1],
       });
     }
   );
 
   restaurantReviewContract.on(
     "RestaurantCreated",
-    (
+    async (
       id: bigint,
       cityId: bigint,
       restaurantAddress: string,
@@ -123,11 +142,16 @@ const listenToNewData = async () => {
       console.log(
         `Received new restaurant ${id}: City #${cityId}, ${restaurantAddress}, ${restaurantName}`
       );
+      const location = await getCoordinates(
+        `${restaurantName}, ${restaurantAddress}`
+      );
       createRestaurantInDb({
         id: Number(id),
         cityId: Number(cityId),
         restaurantAddress: restaurantAddress,
         restaurantName: restaurantName,
+        longitude: location[0],
+        latitude: location[1],
       });
     }
   );

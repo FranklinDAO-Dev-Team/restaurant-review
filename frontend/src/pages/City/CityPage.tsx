@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, List, Typography } from "@mui/material";
+import { Box, Grid, LinearProgress, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Restaurant } from "../../types/Restaurant";
@@ -6,35 +6,46 @@ import { getRestaurantsByCountryAndCityName } from "../../routes/restaurants";
 import { RestaurantsCard } from "../../components/RestaurantsCard";
 import { RestaurantCard } from "../../components/RestaurantCard";
 import { RestaurantMap } from "../../components/RestaurantMap";
+import { getCityByCountryNameAndCityName } from "../../routes/cities";
+import { City } from "../../types/City";
 
-interface CityData {
-  restaurants: Restaurant[];
-}
-
-function City() {
+function CityPage() {
   const { countryName, cityName } = useParams();
 
-  const [loading, setLoading] = useState(false);
-  const [cityData, setCityData] = useState<CityData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [cityData, setCityData] = useState<City>({
+    id: 0,
+    countryName: "",
+    cityName: "",
+    longitude: 0,
+    latitude: 0,
+  });
   const [activeRestaurant, setActiveRestaurant] = useState<Restaurant | null>(
     null
   );
 
   const loadCityData = async () => {
+    if (!countryName || !cityName) return;
+
     setLoading(true);
 
+    const rawCityData = await getCityByCountryNameAndCityName(
+      countryName,
+      cityName
+    );
+
     const restaurants = await getRestaurantsByCountryAndCityName(
-      countryName || "",
-      cityName || ""
+      countryName,
+      cityName
     );
 
     setLoading(false);
-    setCityData({ restaurants });
+    setCityData({ ...rawCityData, restaurants: restaurants });
     setActiveRestaurant(null);
   };
 
   useEffect(() => {
-    if (cityData != null) return;
+    if (cityData.countryName !== "") return;
 
     loadCityData();
   }, [cityData]);
@@ -71,7 +82,10 @@ function City() {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <RestaurantMap restaurants={restaurants} />
+          <RestaurantMap
+            cityData={cityData}
+            setActiveRestaurant={setActiveRestaurant}
+          />
         </Grid>
         <Grid item xs={4}>
           <RestaurantsCard
@@ -87,4 +101,4 @@ function City() {
   );
 }
 
-export { City };
+export { CityPage };

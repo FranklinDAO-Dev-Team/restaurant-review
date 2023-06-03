@@ -8,4 +8,14 @@ const getAllCitiesByCountryName = async (countryName: string) => {
   return result.data;
 };
 
-export { getAllCitiesByCountryName };
+const getCityByCountryNameAndCityName = async (
+  countryName: string,
+  cityName: string
+) => {
+  const result = await axios.get(
+    `${BASE_SERVER_URL}/api/cities/${countryName}/${cityName}`
+  );
+  return result.data;
+};
+
+export { getAllCitiesByCountryName, getCityByCountryNameAndCityName };

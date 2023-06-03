@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home/Home";
+import { HomePage } from "./pages/Home/HomePage";
 import { Header } from "./components/Header";
-import { City } from "./pages/City/City";
+import { CityPage } from "./pages/City/CityPage";
 
 function App() {
   return (
@@ -29,8 +29,8 @@ function App() {
         <Header />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/:countryName/:cityName" element={<City />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/:countryName/:cityName" element={<CityPage />} />
           </Routes>
         </BrowserRouter>
       </Container>
