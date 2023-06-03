@@ -5,6 +5,7 @@ import { Restaurant } from "../../types/Restaurant";
 import { getRestaurantsByCountryAndCityName } from "../../routes/restaurants";
 import { RestaurantsCard } from "../../components/RestaurantsCard";
 import { RestaurantCard } from "../../components/RestaurantCard";
+import { RestaurantMap } from "../../components/RestaurantMap";
 
 interface CityData {
   restaurants: Restaurant[];
@@ -61,6 +62,8 @@ function City() {
     );
   }
 
+  const restaurants = cityData?.restaurants || [];
+
   return (
     <>
       <Typography variant="h3">
@@ -68,11 +71,11 @@ function City() {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <div />
+          <RestaurantMap restaurants={restaurants} />
         </Grid>
         <Grid item xs={4}>
           <RestaurantsCard
-            restaurants={cityData?.restaurants || []}
+            restaurants={restaurants}
             onRestaurantClick={onRestaurantClick}
           />
         </Grid>
