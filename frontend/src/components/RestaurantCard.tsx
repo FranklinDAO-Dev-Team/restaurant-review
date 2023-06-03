@@ -1,8 +1,6 @@
 import {
-  Box,
   Card,
   CardContent,
-  CardHeader,
   LinearProgress,
   Rating,
   Stack,
