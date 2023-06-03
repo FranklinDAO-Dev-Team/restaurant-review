@@ -1,6 +1,6 @@
 import { Box, Card, CardContent } from "@mui/material";
 import mapboxgl from "mapbox-gl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Restaurant } from "../types/Restaurant";
 import { City } from "../types/City";
 

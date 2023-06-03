@@ -7,11 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { StarBorder } from "@mui/icons-material";
 import { Restaurant } from "../types/Restaurant";
 import { Review } from "../types/Review";
 import { getReviewsByRestaurantId } from "../routes/reviews";
 import { ReviewCard } from "./ReviewCard";
-import { StarBorder } from "@mui/icons-material";
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
