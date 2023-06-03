@@ -11,6 +11,7 @@ import { Restaurant } from "../types/Restaurant";
 import { Review } from "../types/Review";
 import { getReviewsByRestaurantId } from "../routes/reviews";
 import { ReviewCard } from "./ReviewCard";
+import { StarBorder } from "@mui/icons-material";
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
@@ -44,7 +45,13 @@ function RestaurantCard({ restaurant }: RestaurantCardProps) {
           spacing={1}
           sx={{ alignItems: "center", marginBottom: "1rem" }}
         >
-          <Rating value={restaurant.averageRating} readOnly />
+          <Rating
+            value={restaurant.averageRating}
+            readOnly
+            emptyIcon={
+              <StarBorder fontSize="inherit" sx={{ color: "white" }} />
+            }
+          />
           <Typography variant="h6" sx={{ color: "yellow" }}>
             {restaurant.averageRating} ({restaurant.numberOfReviews}{" "}
             {restaurant.numberOfReviews === 1 ? "review" : "reviews"})

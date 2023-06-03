@@ -45,7 +45,7 @@ function CityPage() {
   };
 
   useEffect(() => {
-    if (cityData != null) return;
+    if (cityData.countryName !== "") return;
 
     loadCityData();
   }, [cityData]);
