@@ -32,7 +32,7 @@ function RestaurantsCard({
           {restaurants
             .filter((restaurant) => restaurant.restaurantName.includes(search))
             .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
-            .slice(0, 5)
+            .slice(0, 6)
             .map((restaurant) => (
               <RestaurantTab
                 restaurant={restaurant}

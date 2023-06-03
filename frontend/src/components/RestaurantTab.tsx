@@ -24,13 +24,21 @@ function RestaurantTab({
           }}
         >
           <Typography variant="h5">{restaurant.restaurantName}</Typography>
-          <Rating
-            value={restaurant.averageRating}
-            readOnly
-            emptyIcon={
-              <StarBorder fontSize="inherit" sx={{ color: "white" }} />
-            }
-          />
+          <Stack direction="row" sx={{ alignItems: "center" }} spacing={1}>
+            <Rating
+              value={restaurant.averageRating}
+              readOnly
+              emptyIcon={
+                <StarBorder fontSize="inherit" sx={{ color: "white" }} />
+              }
+            />
+            <Typography
+              variant="h6"
+              sx={{ color: "yellow", whiteSpace: "nowrap" }}
+            >
+              {restaurant.averageRating} ({restaurant.numberOfReviews})
+            </Typography>
+          </Stack>
         </Stack>
       </CardActionArea>
     </Card>

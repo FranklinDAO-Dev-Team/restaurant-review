@@ -4,4 +4,5 @@ export interface Restaurant {
   restaurantAddress: string;
   restaurantName: string;
   averageRating?: number;
+  numberOfReviews?: number;
 }

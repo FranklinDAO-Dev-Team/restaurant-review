@@ -1,8 +1,11 @@
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   LinearProgress,
+  Rating,
+  Stack,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -32,12 +35,23 @@ function RestaurantCard({ restaurant }: RestaurantCardProps) {
   }, [restaurant]);
 
   return (
-    <Card variant="outlined" sx={{ padding: "1rem", minWidth: "30rem" }}>
+    <Card variant="outlined">
       <CardContent>
         <Typography variant="h4">{restaurant.restaurantName}</Typography>
-        <Typography variant="h6" sx={{ color: "yellow", marginBottom: "1rem" }}>
+        <Typography variant="h6" sx={{ color: "yellow" }}>
           {restaurant.restaurantAddress}
         </Typography>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignItems: "center", marginBottom: "1rem" }}
+        >
+          <Rating value={restaurant.averageRating} readOnly />
+          <Typography variant="h6" sx={{ color: "yellow" }}>
+            {restaurant.averageRating} ({restaurant.numberOfReviews}{" "}
+            {restaurant.numberOfReviews === 1 ? "review" : "reviews"})
+          </Typography>
+        </Stack>
         {loading ? (
           <LinearProgress sx={{ width: "100%" }} />
         ) : (

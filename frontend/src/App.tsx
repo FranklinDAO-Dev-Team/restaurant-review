@@ -24,6 +24,7 @@ function App() {
           alignItems: "center",
           rowGap: "2rem",
         }}
+        maxWidth={false}
       >
         <Header />
         <BrowserRouter>

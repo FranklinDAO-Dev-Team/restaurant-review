@@ -5,7 +5,8 @@ interface Restaurant {
   cityId: number;
   restaurantAddress: string;
   restaurantName: string;
-  averageRating?: string;
+  averageRating?: number;
+  numberOfReviews?: number;
 }
 
 const createRestaurantInDb = async (restaurant: Restaurant) => {
@@ -27,7 +28,7 @@ const getRestaurantsByCountryAndCityNameFromDb = async (
   cityName: string
 ) => {
   const query = `
-SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, AVG(reviews.rating) as averageRating
+SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, AVG(reviews.rating) as averageRating, COUNT(reviews.rating) as numberOfReviews
 FROM restaurants
 JOIN reviews ON restaurants.id = reviews.restaurantId
 JOIN cities ON restaurants.cityId = cities.id
