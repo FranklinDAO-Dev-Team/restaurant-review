@@ -10,11 +10,9 @@ function App() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         width: "100vw",
         height: "100vh",
-        padding: 0,
+        padding: "2rem",
         margin: 0,
         backgroundColor: "#282c34",
       }}
@@ -24,7 +22,6 @@ function App() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
           rowGap: "2rem",
         }}
       >

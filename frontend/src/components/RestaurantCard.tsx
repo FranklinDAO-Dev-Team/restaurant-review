@@ -1,34 +1,49 @@
-import { Card, CardActionArea, Rating, Stack, Typography } from "@mui/material";
-import { StarBorder } from "@mui/icons-material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { Restaurant } from "../types/Restaurant";
+import { Review } from "../types/Review";
+import { getReviewsByRestaurantId } from "../routes/reviews";
+import { ReviewCard } from "./ReviewCard";
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
 }
 
 function RestaurantCard({ restaurant }: RestaurantCardProps) {
+  const [loading, setLoading] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  const loadReviews = async () => {
+    setReviews([]);
+    setLoading(true);
+    const response = await getReviewsByRestaurantId(restaurant.id);
+    setLoading(false);
+    setReviews(response);
+  };
+
+  useEffect(() => {
+    loadReviews();
+  }, [restaurant]);
+
   return (
-    <Card variant="outlined">
-      <CardActionArea>
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1rem",
-          }}
-        >
-          <Typography variant="h5">{restaurant.restaurantName}</Typography>
-          <Rating
-            value={restaurant.averageRating}
-            readOnly
-            emptyIcon={
-              <StarBorder fontSize="inherit" sx={{ color: "white" }} />
-            }
-          />
-        </Stack>
-      </CardActionArea>
+    <Card variant="outlined" sx={{ padding: "1rem", minWidth: "30rem" }}>
+      <CardContent>
+        <Typography variant="h4">{restaurant.restaurantName}</Typography>
+        <Typography variant="h6" sx={{ color: "yellow", marginBottom: "1rem" }}>
+          {restaurant.restaurantAddress}
+        </Typography>
+        {loading ? (
+          <LinearProgress sx={{ width: "100%" }} />
+        ) : (
+          reviews.map((review) => <ReviewCard review={review} />)
+        )}
+      </CardContent>
     </Card>
   );
 }

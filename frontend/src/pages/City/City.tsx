@@ -1,8 +1,9 @@
-import { Box, LinearProgress, List, Typography } from "@mui/material";
+import { Box, Grid, LinearProgress, List, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Restaurant } from "../../types/Restaurant";
 import { getRestaurantsByCountryAndCityName } from "../../routes/restaurants";
+import { RestaurantsCard } from "../../components/RestaurantsCard";
 import { RestaurantCard } from "../../components/RestaurantCard";
 
 interface CityData {
@@ -14,6 +15,9 @@ function City() {
 
   const [loading, setLoading] = useState(false);
   const [cityData, setCityData] = useState<CityData | null>(null);
+  const [activeRestaurant, setActiveRestaurant] = useState<Restaurant | null>(
+    null
+  );
 
   const loadCityData = async () => {
     setLoading(true);
@@ -25,6 +29,7 @@ function City() {
 
     setLoading(false);
     setCityData({ restaurants });
+    setActiveRestaurant(null);
   };
 
   useEffect(() => {
@@ -32,6 +37,14 @@ function City() {
 
     loadCityData();
   }, [cityData]);
+
+  const onRestaurantClick = (restaurant: Restaurant) => {
+    if (activeRestaurant?.id === restaurant.id) {
+      setActiveRestaurant(null);
+    } else {
+      setActiveRestaurant(restaurant);
+    }
+  };
 
   if (loading) {
     return (
@@ -53,11 +66,20 @@ function City() {
       <Typography variant="h3">
         Found u some <span style={{ color: "yellow" }}>{cityName}</span> grub:
       </Typography>
-      <List>
-        {cityData?.restaurants?.map((restaurant) => (
-          <RestaurantCard restaurant={restaurant} />
-        ))}
-      </List>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <div />
+        </Grid>
+        <Grid item xs={4}>
+          <RestaurantsCard
+            restaurants={cityData?.restaurants || []}
+            onRestaurantClick={onRestaurantClick}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          {activeRestaurant && <RestaurantCard restaurant={activeRestaurant} />}
+        </Grid>
+      </Grid>
     </>
   );
 }

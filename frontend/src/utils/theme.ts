@@ -49,7 +49,7 @@ const theme = createTheme({
             },
           [`& .${outlinedInputClasses.input}`]: {
             color: "white",
-            fontSize: "2rem",
+            fontSize: "1.5rem",
             textAlign: "center",
           },
         },
