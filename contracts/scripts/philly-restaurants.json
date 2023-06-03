@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Virasat Haveli",
+        "address": "4051 Market St, Philadelphia, PA 19104",
+        "rating": 4,
+        "review": "Very solid Indian food."
+    },
+    {
+        "name": "Morimoto",
+        "address": "723 Chestnut St, Philadelphia, PA 19106",
+        "rating": 4,
+        "review": "Good food, but expensive... Nice Instagram photos!"
+    },
+    {
+        "name": "Laser Wolf",
+        "address": "1301 N Howard St, Philadelphia, PA 19122",
+        "rating": 5,
+        "review": "Best hummus in Philly!"
+    },
+    {
+        "name": "Cuzzy's Ice Cream Parlor",
+        "address": "618 S 5th St, Philadelphia, PA 19147",
+        "rating": 5,
+        "review": "Best ice cream in Philly!"
+    },
+    {
+        "name": "Little Nonna's",
+        "address": "1234 Locust St, Philadelphia, PA 19107",
+        "rating": 4,
+        "review": "Great home-style Italian food!"
+    },
+    {
+        "name": "Bud & Marilyn's",
+        "address": "1234 Locust St, Philadelphia, PA 19107",
+        "rating": 4,
+        "review": "Very solid American food! Get the fried chicken!"
+    },
+    {
+        "name": "Vibrant Coffee Roasters & Bakery",
+        "address": "222 W Rittenhouse Square 1st Floor, Philadelphia, PA 19103",
+        "rating": 5,
+        "review": "Great coffee and pastries!"
+    }
+]

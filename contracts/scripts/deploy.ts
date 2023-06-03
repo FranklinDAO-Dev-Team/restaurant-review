@@ -1,4 +1,12 @@
 import { ethers } from "hardhat";
+import { readFileSync } from "fs";
+
+interface RestaurantAndReview {
+  name: string;
+  address: string;
+  rating: number;
+  review: string;
+}
 
 async function main() {
   const MIN_RATING = 1;
@@ -15,62 +23,61 @@ async function main() {
 
   console.log(`RestaurantReview deployed to ${restaurantReview.address}`);
 
-  await restaurantReview
-    .connect(accounts[0])
-    .createRestaurantAndReview(
-      "Philippines",
-      "Manila",
-      "Test Address",
-      "Jollibee",
-      5,
-      "Yummy!"
-    );
+  await restaurantReview.createCity("Philippines", "Manila");
+  await restaurantReview.createCity("USA", "Philadelphia");
 
-  await restaurantReview
-    .connect(accounts[1])
-    .createRestaurantAndReview(
-      "Canada",
-      "Vancouver",
-      "Test Address 2",
-      "Tim Hortons",
-      4,
-      "Good food"
-    );
+  const manilaId = Number(await restaurantReview.getNumberOfCities()) - 2;
+  const phillyId = Number(await restaurantReview.getNumberOfCities()) - 1;
+  console.log(`Manila ID: ${manilaId}`);
+  console.log(`Philadelphia ID: ${phillyId}`);
 
-  await restaurantReview
-    .connect(accounts[2])
-    .createRestaurantAndReview(
-      "USA",
-      "New York",
-      "Test Address 3",
-      "Burger King",
-      3,
-      "Meh"
-    );
+  console.log("Loading Manila restaurants...");
+  const manilaRestaurantsFile = readFileSync(
+    "scripts/manila-restaurants.json",
+    "utf-8"
+  );
+  const manilaRestaurants = JSON.parse(
+    manilaRestaurantsFile
+  ) as RestaurantAndReview[];
 
-  const numRestaurants = await restaurantReview.getNumberOfRestaurants();
-  console.log(`Number of restaurants: ${numRestaurants}`);
+  await Promise.all(
+    manilaRestaurants.map(async (restaurant) => {
+      await restaurantReview
+        .connect(accounts[0])
+        .createRestaurantAndReview(
+          manilaId,
+          restaurant.address,
+          restaurant.name,
+          restaurant.rating,
+          restaurant.review
+        );
+    })
+  );
+  console.log("Loaded Manila restaurants");
 
-  const restaurant1 = await restaurantReview.getRestaurantById(0);
-  console.log(`Restaurant 1: ${restaurant1}`);
+  console.log("Loading Philadelphia restaurants...");
+  const phillyRestaurantsFile = readFileSync(
+    "scripts/philly-restaurants.json",
+    "utf-8"
+  );
+  const phillyRestaurants = JSON.parse(
+    phillyRestaurantsFile
+  ) as RestaurantAndReview[];
 
-  const restaurant2 = await restaurantReview.getRestaurantById(1);
-  console.log(`Restaurant 2: ${restaurant2}`);
-
-  const restaurant3 = await restaurantReview.getRestaurantById(2);
-  console.log(`Restaurant 3: ${restaurant3}`);
-
-  const numReviews = await restaurantReview.getNumberOfReviews();
-  console.log(`Number of reviews: ${numReviews}`);
-
-  const review1 = await restaurantReview.getReviewById(0);
-  console.log(`Review 1: ${review1}`);
-
-  const review2 = await restaurantReview.getReviewById(1);
-  console.log(`Review 2: ${review2}`);
-
-  const review3 = await restaurantReview.getReviewById(2);
-  console.log(`Review 3: ${review3}`);
+  await Promise.all(
+    phillyRestaurants.map(async (restaurant) => {
+      await restaurantReview
+        .connect(accounts[0])
+        .createRestaurantAndReview(
+          phillyId,
+          restaurant.address,
+          restaurant.name,
+          restaurant.rating,
+          restaurant.review
+        );
+    })
+  );
+  console.log("Loaded Philadelphia restaurants");
 }
 
 // We recommend this pattern to be able to use async/await everywhere

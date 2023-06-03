@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { router } from "./routers/router";
 import { sync } from "./utils/sync";
 
@@ -15,7 +16,9 @@ const main = async () => {
 
   const app = express();
 
-  app.use(router);
+  app.use(cors());
+
+  app.use("/api", router);
 
   app.listen(port, () => {
     console.log(`Server listening to http://localhost:${port}`);

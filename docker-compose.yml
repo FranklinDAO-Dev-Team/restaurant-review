@@ -1,0 +1,23 @@
+services:
+  node:
+    build: .
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:8545", "-d", "{\"jsonrpc\":\"2.0\",\"method\":\"eth_blockNumber\",\"params\":[],\"id\":1}"]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+      start_period: 5s
+  deployer:
+    build: ./contracts
+    depends_on:
+      node:
+        condition: service_healthy
+  backend:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      deployer:
+        condition: service_completed_successfully

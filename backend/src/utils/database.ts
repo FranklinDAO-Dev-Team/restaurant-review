@@ -14,13 +14,22 @@ let db: Database;
 const main = async () => {
   db = await createDbConnection(DB_SOURCE);
 
+  const cityQuery = `
+CREATE TABLE IF NOT EXISTS cities (
+  id INTEGER PRIMARY KEY,
+  countryName text NOT NULL,
+  cityName text NOT NULL
+)
+  `;
+  await db.run(cityQuery);
+
   const restaurantQuery = `
 CREATE TABLE IF NOT EXISTS restaurants (
   id INTEGER PRIMARY KEY,
-  country text,
-  city text,
-  address text,
-  name text
+  cityId INTEGER NOT NULL,
+  restaurantAddress text NOT NULL,
+  restaurantName text NOT NULL,
+  FOREIGN KEY (cityId) REFERENCES cities(id)
 )
 `;
   await db.run(restaurantQuery);
@@ -28,8 +37,9 @@ CREATE TABLE IF NOT EXISTS restaurants (
   const reviewQuery = `
 CREATE TABLE IF NOT EXISTS reviews (
   id INTEGER PRIMARY KEY,
-  restaurantId INTEGER,
-  rating INTEGER,
+  restaurantId INTEGER NOT NULL,
+  reviewer text NOT NULL,
+  rating INTEGER NOT NULL,
   metadata text,
   FOREIGN KEY (restaurantId) REFERENCES restaurants(id)
 )

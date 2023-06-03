@@ -1,21 +1,16 @@
 import { Request, Response } from "express";
-import {
-  getTopRestaurantsByCountryAndCityFromDb,
-  getTopRestaurantsFromDb,
-} from "../models/restaurant";
+import { getRestaurantsByCountryAndCityNameFromDb } from "../models/restaurant";
 
-const getTopRestaurants = async (req: Request, res: Response) => {
-  const result = await getTopRestaurantsFromDb();
-  res.send(result);
-};
-
-const getTopRestaurantsByCountryAndCity = async (
+const getRestaurantsByCountryAndCityName = async (
   req: Request,
   res: Response
 ) => {
-  const { country, city } = req.params;
-  const result = await getTopRestaurantsByCountryAndCityFromDb(country, city);
+  const { countryName, cityName } = req.params;
+  const result = await getRestaurantsByCountryAndCityNameFromDb(
+    countryName,
+    cityName
+  );
   res.send(result);
 };
 
-export { getTopRestaurants, getTopRestaurantsByCountryAndCity };
+export { getRestaurantsByCountryAndCityName };
