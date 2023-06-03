@@ -2,7 +2,6 @@ import {
   Autocomplete,
   Box,
   Button,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -11,7 +10,7 @@ import { Navigate } from "react-router-dom";
 import { getAllCountries } from "../../routes/countries";
 import { getAllCitiesByCountryName } from "../../routes/cities";
 
-function Home() {
+function HomePage() {
   const [stage, setStage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState<string[] | null>(null);
@@ -176,4 +175,4 @@ function Home() {
   );
 }
 
-export { Home };
+export { HomePage };

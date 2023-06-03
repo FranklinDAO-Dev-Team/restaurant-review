@@ -1,24 +1,31 @@
 import { getDb } from "../utils/database";
 
-interface Restaurant {
+interface BaseRestaurant {
   id: number;
   cityId: number;
   restaurantAddress: string;
   restaurantName: string;
-  averageRating?: number;
-  numberOfReviews?: number;
+  longitude: number;
+  latitude: number;
 }
 
-const createRestaurantInDb = async (restaurant: Restaurant) => {
+interface Restaurant extends BaseRestaurant {
+  averageRating: number;
+  numberOfReviews: number;
+}
+
+const createRestaurantInDb = async (restaurant: BaseRestaurant) => {
   const query = `
-INSERT OR IGNORE INTO restaurants (id, cityId, restaurantAddress, restaurantName)
-VALUES (?, ?, ?, ?)
+INSERT OR IGNORE INTO restaurants (id, cityId, restaurantAddress, restaurantName, longitude, latitude)
+VALUES (?, ?, ?, ?, ?, ?)
     `;
   const result = await getDb().run(query, [
     restaurant.id,
     restaurant.cityId,
     restaurant.restaurantAddress,
     restaurant.restaurantName,
+    restaurant.longitude,
+    restaurant.latitude,
   ]);
   return result.lastID;
 };
@@ -28,7 +35,7 @@ const getRestaurantsByCountryAndCityNameFromDb = async (
   cityName: string
 ) => {
   const query = `
-SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, AVG(reviews.rating) as averageRating, COUNT(reviews.rating) as numberOfReviews
+SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, restaurants.longitude, restaurants.latitude, AVG(reviews.rating) as averageRating, COUNT(reviews.rating) as numberOfReviews
 FROM restaurants
 JOIN reviews ON restaurants.id = reviews.restaurantId
 JOIN cities ON restaurants.cityId = cities.id

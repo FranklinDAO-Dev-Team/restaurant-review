@@ -4,17 +4,21 @@ interface City {
   id: number;
   countryName: string;
   cityName: string;
+  longitude: number;
+  latitude: number;
 }
 
 const createCityInDb = async (city: City) => {
   const query = `
-INSERT OR IGNORE INTO cities (id, countryName, cityName)
-VALUES (?, ?, ?)
+INSERT OR IGNORE INTO cities (id, countryName, cityName, longitude, latitude)
+VALUES (?, ?, ?, ?, ?)
     `;
   const result = await getDb().run(query, [
     city.id,
     city.countryName,
     city.cityName,
+    city.longitude,
+    city.latitude,
   ]);
   return result.lastID;
 };
@@ -40,9 +44,23 @@ ORDER BY cityName ASC
   return result.map((row) => row.cityName);
 };
 
+const getCityByCountryNameAndCityNameFromDb = async (
+  countryName: string,
+  cityName: string
+) => {
+  const query = `
+SELECT *
+FROM cities
+WHERE countryName = ? AND cityName = ?
+  `;
+  const result = await getDb().get(query, [countryName, cityName]);
+  return result as City;
+};
+
 export {
   City,
   createCityInDb,
   getAllCountriesFromDb,
   getAllCitiesByCountryNameFromDb,
+  getCityByCountryNameAndCityNameFromDb,
 };

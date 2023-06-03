@@ -35,6 +35,7 @@ function RestaurantsCard({
             .slice(0, 6)
             .map((restaurant) => (
               <RestaurantTab
+                key={restaurant.id}
                 restaurant={restaurant}
                 onRestaurantClick={onRestaurantClick}
               />

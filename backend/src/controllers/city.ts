@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { getAllCitiesByCountryNameFromDb } from "../models/city";
+import {
+  getAllCitiesByCountryNameFromDb,
+  getCityByCountryNameAndCityNameFromDb,
+} from "../models/city";
 
 const getAllCitiesByCountryName = async (req: Request, res: Response) => {
   const { countryName } = req.params;
@@ -7,4 +10,13 @@ const getAllCitiesByCountryName = async (req: Request, res: Response) => {
   res.send(result);
 };
 
-export { getAllCitiesByCountryName };
+const getCityById = async (req: Request, res: Response) => {
+  const { countryName, cityName } = req.params;
+  const result = await getCityByCountryNameAndCityNameFromDb(
+    countryName,
+    cityName
+  );
+  res.send(result);
+};
+
+export { getAllCitiesByCountryName, getCityById };
