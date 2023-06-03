@@ -94,6 +94,26 @@ const theme = createTheme({
         },
       },
     },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent",
+        },
+        bar: {
+          backgroundColor: "yellow",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent",
+          border: "solid",
+          borderColor: "yellow",
+          borderWidth: "2px",
+        },
+      },
+    },
   },
 });
 

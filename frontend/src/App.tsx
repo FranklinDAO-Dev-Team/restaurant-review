@@ -1,21 +1,8 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Box, Container } from "@mui/material";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Header from "./components/Header.tsx";
 import City from "./pages/City/City.tsx";
-import { cityLoader } from "./pages/City/loader";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/:countryName/:cityName",
-    element: <City />,
-    loader: cityLoader,
-  },
-]);
 
 function App() {
   return (
@@ -42,7 +29,12 @@ function App() {
         }}
       >
         <Header />
-        <RouterProvider router={router} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:countryName/:cityName" element={<City />} />
+          </Routes>
+        </BrowserRouter>
       </Container>
     </Box>
   );

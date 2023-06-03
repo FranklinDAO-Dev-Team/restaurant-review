@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_SERVER_URL } from "../../utils/env";
+import { BASE_SERVER_URL } from "../utils/env";
 
 export const getRestaurantsByCountryAndCityName = async (
   countryName: string,

@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "utils/theme.ts", "utils/env.ts"],
+  "include": ["src", "src/utils/theme.ts", "src/utils/env.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

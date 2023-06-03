@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_SERVER_URL } from "../../utils/env";
+import { BASE_SERVER_URL } from "../utils/env";
 
 const getAllCitiesByCountryName = async (countryName: string) => {
   const result = await axios.get(
