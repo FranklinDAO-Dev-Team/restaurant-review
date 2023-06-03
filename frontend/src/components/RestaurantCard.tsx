@@ -26,4 +26,4 @@ function RestaurantCard({ restaurant }: RestaurantCardProps) {
   );
 }
 
-export default RestaurantCard;
+export { RestaurantCard };

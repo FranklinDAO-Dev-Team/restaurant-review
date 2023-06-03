@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Restaurant } from "../../types/Restaurant";
 import { getRestaurantsByCountryAndCityName } from "../../routes/restaurants";
-import RestaurantCard from "../../components/RestaurantCard";
+import { RestaurantCard } from "../../components/RestaurantCard";
 
 interface CityData {
   restaurants: Restaurant[];
@@ -62,4 +62,4 @@ function City() {
   );
 }
 
-export default City;
+export { City };

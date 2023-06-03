@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home.tsx";
-import Header from "./components/Header.tsx";
-import City from "./pages/City/City.tsx";
+import { Home } from "./pages/Home/Home";
+import { Header } from "./components/Header";
+import { City } from "./pages/City/City";
 
 function App() {
   return (
