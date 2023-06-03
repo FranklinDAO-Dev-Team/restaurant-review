@@ -1,4 +1,4 @@
-import { Card, CardContent, List, TextField } from "@mui/material";
+import { Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { RestaurantTab } from "./RestaurantTab";
 import { Restaurant } from "../types/Restaurant";
@@ -7,6 +7,8 @@ interface RestaurantsCardProps {
   restaurants: Restaurant[];
   onRestaurantClick: (restaurant: Restaurant) => void;
 }
+
+const maxRestaurants = 5;
 
 function RestaurantsCard({
   restaurants,
@@ -18,6 +20,10 @@ function RestaurantsCard({
     setSearch(event.target.value);
   };
 
+  const matchingRestaurants = restaurants.filter((restaurant) =>
+    restaurant.restaurantName.includes(search)
+  );
+
   return (
     <Card variant="outlined">
       <CardContent>
@@ -28,11 +34,10 @@ function RestaurantsCard({
           sx={{ width: "100%", paddingBottom: "1rem" }}
           onChange={onSearchChange}
         />
-        <List sx={{ padding: 0 }}>
-          {restaurants
-            .filter((restaurant) => restaurant.restaurantName.includes(search))
+        <Stack sx={{ padding: 0 }} spacing={1}>
+          {matchingRestaurants
             .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
-            .slice(0, 6)
+            .slice(0, maxRestaurants)
             .map((restaurant) => (
               <RestaurantTab
                 key={restaurant.id}
@@ -40,7 +45,12 @@ function RestaurantsCard({
                 onRestaurantClick={onRestaurantClick}
               />
             ))}
-        </List>
+          {matchingRestaurants.length > maxRestaurants && (
+            <Typography variant="h5" align="center" sx={{ color: "gray" }}>
+              {matchingRestaurants.length - maxRestaurants} more...
+            </Typography>
+          )}
+        </Stack>
       </CardContent>
     </Card>
   );
