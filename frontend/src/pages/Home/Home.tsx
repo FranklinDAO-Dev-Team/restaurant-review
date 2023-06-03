@@ -30,7 +30,6 @@ function Home() {
   };
 
   const handleSubmitCountry = (event: FormEvent<HTMLButtonElement>) => {
-    console.log("submit");
     event.preventDefault();
     if (selectedCountryName != null) {
       setStage(2);

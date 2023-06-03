@@ -8,4 +8,6 @@ RUN npm ci
 
 COPY . .
 
-ENTRYPOINT [ "npx", "hardhat", "run", "scripts/deploy.ts", "--network", "node" ]
+RUN npx hardhat compile
+
+ENTRYPOINT ["npx", "hardhat", "run", "scripts/deploy.ts", "--network", "node"]

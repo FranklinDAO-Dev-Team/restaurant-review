@@ -1,4 +1,5 @@
 import { Card, CardActionArea, Rating, Stack, Typography } from "@mui/material";
+import { StarBorder } from "@mui/icons-material";
 import { Restaurant } from "../types/Restaurant";
 
 interface RestaurantCardProps {
@@ -19,7 +20,13 @@ function RestaurantCard({ restaurant }: RestaurantCardProps) {
           }}
         >
           <Typography variant="h5">{restaurant.restaurantName}</Typography>
-          <Rating value={restaurant.averageRating} readOnly />
+          <Rating
+            value={restaurant.averageRating}
+            readOnly
+            emptyIcon={
+              <StarBorder fontSize="inherit" sx={{ color: "white" }} />
+            }
+          />
         </Stack>
       </CardActionArea>
     </Card>

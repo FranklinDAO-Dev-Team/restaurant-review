@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Flame Restaurant",
+        "address": "H23G+CR6, Makati, Metro Manila, Philippines",
+        "rating": 5,
+        "review": "Great food and service! Check out the outdoor bar if it's open!"
+    },
+    {
+        "name": "Mendokoro Ramenba Makati",
+        "address": "Unit 14 & 15, V Corporate Center, Salcedo Village, Soliman, Makati, 1209 Metro Manila, Philippines",
+        "rating": 5,
+        "review": "Best ramen in the Philippines!"
+    },
+    {
+        "name": "Mantra Indian Kitchen & Bar",
+        "address": "Grand Midori G-7, Bolanos, Legaspi Village, Makati, 1229 Metro Manila, Philippines",
+        "rating": 4,
+        "review": "Very solid Indian food. Get the butter chicken!"
+    },
+    {
+        "name": "East Ocean Palace Restaurant",
+        "address": "Lot 37 Block 5 Aseana Business Park, Parañaque, Metro Manila, Philippines",
+        "rating": 4,
+        "review": "Nostalgic Chinese food. Great for big groups!"
+    },
+    {
+        "name": "Metronome",
+        "address": "160 Bolanos, Legazpi Village, Makati, 1229 Kalakhang Maynila, Philippines",
+        "rating": 5,
+        "review": "One of the best French restaurants in Manila!"
+    },
+    {
+        "name": "Balai Palma",
+        "address": "6081b R Palma, Makati, Metro Manila, Philippines",
+        "rating": 5,
+        "review": "Amazing modern Filipino and fusion food!"
+    },
+    {
+        "name": "Tsukiji",
+        "address": "3/F, Milky Way Building, Makati, Metro Manila, Philippines",
+        "rating": 4,
+        "review": "Best all-around Japanese food. Get the sushi and lunch specials!"
+    },
+    {
+        "name": "Kazunori Japanese Restaurant",
+        "address": "G/F, Mazda Makati Building, 2301 Chino Roces Ave, Makati, 1231 Metro Manila, Philippines",
+        "rating": 4,
+        "review": "Great Japanese noodles and katsu curry."
+    }
+]
