@@ -89,8 +89,10 @@ function CityPage() {
         </Grid>
         <Grid item xs={4}>
           <RestaurantsCard
+            cityId={cityData.id}
             restaurants={restaurants}
             onRestaurantClick={onRestaurantClick}
+            reloadRestaurants={loadCityData}
           />
         </Grid>
         <Grid item xs={4}>
