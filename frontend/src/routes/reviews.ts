@@ -7,3 +7,22 @@ export const getReviewsByRestaurantId = async (restaurantId: number) => {
   );
   return result.data;
 };
+
+export const createReviewMetadata = async (comment: string, files: File[]) => {
+  const formData = new FormData();
+  formData.append("comment", comment);
+  files.forEach((file) => {
+    formData.append(`files`, file);
+  });
+
+  const result = await axios.post(
+    `${BASE_SERVER_URL}/api/reviews/metadata`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return result.data;
+};

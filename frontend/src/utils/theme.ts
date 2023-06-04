@@ -164,6 +164,30 @@ const theme = createTheme({
         },
       },
     },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          color: "yellow",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          "&:hover": {
+            backgroundColor: "rgba(40, 40, 40)",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "white",
+            color: "black",
+          },
+          "&.Mui-selected:hover": {
+            backgroundColor: "rgba(80, 80, 80)",
+          },
+        },
+      },
+    },
   },
 });
 

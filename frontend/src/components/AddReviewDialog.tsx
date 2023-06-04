@@ -6,6 +6,8 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  IconButton,
+  Input,
   Rating,
   Stack,
   TextField,
@@ -17,9 +19,17 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import CloseIcon from "@mui/icons-material/Close";
 import { CONTRACT_ADDRESS } from "../utils/env";
 import { RESTAURANT_REVIEW_CONTRACT } from "../utils/RestaurantReview";
 import { useDebounce } from "../utils/debounce";
+import { createReviewMetadata } from "../routes/reviews";
+
+interface ReviewAttributes {
+  rating: number;
+  comment: string;
+  files: File[];
+}
 
 interface AddReviewDialogProps {
   restaurantId: number;
@@ -34,25 +44,27 @@ function AddReviewDialog({
   onClose,
   onSuccess,
 }: AddReviewDialogProps) {
-  const [review, setReview] = useState({
+  const [review, setReview] = useState<ReviewAttributes>({
     rating: 0,
     comment: "",
+    files: [],
   });
-  const debouncedRestaurant = useDebounce(review, 500);
 
-  const { config } = usePrepareContractWrite({
+  const { data, write } = useContractWrite({
     address: CONTRACT_ADDRESS,
     abi: RESTAURANT_REVIEW_CONTRACT.abi,
     functionName: "createReview",
-    args: [
-      restaurantId,
-      debouncedRestaurant.rating,
-      debouncedRestaurant.comment,
-    ],
-    enabled: Boolean(debouncedRestaurant.rating),
   });
 
-  const { data, write } = useContractWrite(config);
+  const submitReview = async () => {
+    let metadataHash = "";
+    if (review.comment || review.files.length > 0) {
+      metadataHash = await createReviewMetadata(review.comment, review.files);
+    }
+    await write({
+      args: [restaurantId, review.rating, metadataHash],
+    });
+  };
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
@@ -108,10 +120,55 @@ function AddReviewDialog({
               });
             }}
           />
+          {review.files.map((file) => (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "1rem",
+                border: "solid",
+                borderWidth: "1px",
+                borderRadius: "4px",
+                borderColor: "rgba(0, 0, 0, 0.23)",
+              }}
+            >
+              <Typography variant="h5">{file.name}</Typography>
+              <IconButton
+                onClick={() =>
+                  setReview({
+                    ...review,
+                    files: review.files.filter((f) => f !== file),
+                  })
+                }
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+          <Button
+            variant="outlined"
+            sx={{ fontSize: "24px", fontWeight: "regular" }}
+            component="label"
+          >
+            Upload {review.files.length > 0 ? "another" : "a"} image
+            <input
+              type="file"
+              hidden
+              onChange={(event) => {
+                if (event.target.files) {
+                  setReview({
+                    ...review,
+                    files: [...review.files, ...event.target.files],
+                  });
+                }
+              }}
+            />
+          </Button>
           <Button
             variant="outlined"
             sx={{ fontSize: "24px" }}
-            onClick={() => write?.()}
+            onClick={submitReview}
             disabled={!write || isLoading}
           >
             {isLoading ? <CircularProgress /> : "Add Review"}
