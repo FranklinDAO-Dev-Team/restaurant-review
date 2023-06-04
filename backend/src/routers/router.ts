@@ -10,5 +10,8 @@ router.use("/countries", countryRouter);
 router.use("/cities", cityRouter);
 router.use("/restaurants", restaurantRouter);
 router.use("/reviews", reviewRouter);
+router.use("/", (req, res) => {
+  res.send("Restaurant Review API");
+});
 
 export { router };

@@ -18,6 +18,19 @@ services:
     build: ./backend
     ports:
       - "4000:4000"
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:4000/api"]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+      start_period: 5s
     depends_on:
       deployer:
         condition: service_completed_successfully
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
