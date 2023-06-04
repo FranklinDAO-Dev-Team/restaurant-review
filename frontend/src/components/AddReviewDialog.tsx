@@ -7,22 +7,16 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Input,
   Rating,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
+import { useContractWrite, useWaitForTransaction } from "wagmi";
 import CloseIcon from "@mui/icons-material/Close";
 import { CONTRACT_ADDRESS } from "../utils/env";
 import { RESTAURANT_REVIEW_CONTRACT } from "../utils/RestaurantReview";
-import { useDebounce } from "../utils/debounce";
 import { createReviewMetadata } from "../routes/reviews";
 
 interface ReviewAttributes {

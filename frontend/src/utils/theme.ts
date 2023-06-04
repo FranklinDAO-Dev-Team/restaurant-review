@@ -1,8 +1,4 @@
-import {
-  autocompleteClasses,
-  inputLabelClasses,
-  outlinedInputClasses,
-} from "@mui/material";
+import { autocompleteClasses, outlinedInputClasses } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -179,11 +175,11 @@ const theme = createTheme({
             backgroundColor: "rgba(40, 40, 40)",
           },
           "&.Mui-selected": {
-            backgroundColor: "white",
+            backgroundColor: "yellow",
             color: "black",
           },
           "&.Mui-selected:hover": {
-            backgroundColor: "rgba(80, 80, 80)",
+            backgroundColor: "white",
           },
         },
       },
