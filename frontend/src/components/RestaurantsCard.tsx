@@ -42,7 +42,7 @@ function RestaurantsCard({
     <>
       <Card variant="outlined">
         <CardContent>
-          <Box sx={{ minHeight: "500px" }}>
+          <Box>
             <Stack sx={{ padding: 0 }} spacing={1}>
               <TextField
                 value={search}
@@ -65,13 +65,13 @@ function RestaurantsCard({
                 <Typography
                   variant="h5"
                   align="center"
-                  sx={{ color: "gray", padding: "1rem", paddingTop: "0.5rem" }}
+                  sx={{ color: "gray", padding: "1rem" }}
                 >
                   {matchingRestaurants.length - maxRestaurants} more...
                 </Typography>
               )}
+              <AddRestaurantButton onClick={() => setDialogOpen(true)} />
             </Stack>
-            <AddRestaurantButton onClick={() => setDialogOpen(true)} />
           </Box>
         </CardContent>
       </Card>

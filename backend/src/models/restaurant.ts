@@ -46,8 +46,21 @@ GROUP BY restaurants.id
   return result as Restaurant[];
 };
 
+const getRestaurantByIdFromDb = async (id: number) => {
+  const query = `
+SELECT restaurants.id, restaurants.cityId, restaurants.restaurantAddress, restaurants.restaurantName, restaurants.longitude, restaurants.latitude, AVG(reviews.rating) as averageRating, COUNT(reviews.rating) as numberOfReviews
+FROM restaurants
+JOIN reviews ON restaurants.id = reviews.restaurantId
+WHERE restaurants.id = ?
+GROUP BY restaurants.id
+    `;
+  const result = await getDb().get(query, [id]);
+  return result as Restaurant;
+};
+
 export {
   Restaurant,
   createRestaurantInDb,
   getRestaurantsByCountryAndCityNameFromDb,
+  getRestaurantByIdFromDb,
 };

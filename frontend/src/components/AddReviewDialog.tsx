@@ -21,43 +21,35 @@ import { CONTRACT_ADDRESS } from "../utils/env";
 import { RESTAURANT_REVIEW_CONTRACT } from "../utils/RestaurantReview";
 import { useDebounce } from "../utils/debounce";
 
-interface AddRestaurantDialogProps {
-  cityId: number;
+interface AddReviewDialogProps {
+  restaurantId: number;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-function AddRestaurantDialog({
-  cityId,
+function AddReviewDialog({
+  restaurantId,
   open,
   onClose,
   onSuccess,
-}: AddRestaurantDialogProps) {
-  const [restaurant, setRestaurant] = useState({
-    restaurantName: "",
-    restaurantAddress: "",
+}: AddReviewDialogProps) {
+  const [review, setReview] = useState({
     rating: 0,
     comment: "",
   });
-  const debouncedRestaurant = useDebounce(restaurant, 500);
+  const debouncedRestaurant = useDebounce(review, 500);
 
   const { config } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
     abi: RESTAURANT_REVIEW_CONTRACT.abi,
-    functionName: "createRestaurantAndReview",
+    functionName: "createReview",
     args: [
-      cityId,
-      debouncedRestaurant.restaurantAddress,
-      debouncedRestaurant.restaurantName,
+      restaurantId,
       debouncedRestaurant.rating,
       debouncedRestaurant.comment,
     ],
-    enabled: Boolean(
-      debouncedRestaurant.restaurantName &&
-        debouncedRestaurant.restaurantAddress &&
-        debouncedRestaurant.rating
-    ),
+    enabled: Boolean(debouncedRestaurant.rating),
   });
 
   const { data, write } = useContractWrite(config);
@@ -67,7 +59,7 @@ function AddRestaurantDialog({
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (open && isSuccess) {
       setTimeout(() => {
         onSuccess();
       }, 5000);
@@ -79,28 +71,6 @@ function AddRestaurantDialog({
       <DialogTitle sx={{ fontSize: 40 }}>Add a Restaurant!</DialogTitle>
       <DialogContent sx={{ width: "550px" }}>
         <Stack spacing={1}>
-          <TextField
-            value={restaurant.restaurantName}
-            onChange={(event) =>
-              setRestaurant({
-                ...restaurant,
-                restaurantName: event.target.value,
-              })
-            }
-            variant="outlined"
-            placeholder="What's the name of the restaurant?"
-          />
-          <TextField
-            value={restaurant.restaurantAddress}
-            onChange={(event) =>
-              setRestaurant({
-                ...restaurant,
-                restaurantAddress: event.target.value,
-              })
-            }
-            variant="outlined"
-            placeholder="What's the restaurant's address?"
-          />
           <Box
             sx={{
               display: "flex",
@@ -118,10 +88,10 @@ function AddRestaurantDialog({
                 <StarBorder fontSize="inherit" sx={{ color: "white" }} />
               }
               size="large"
-              value={restaurant.rating}
+              value={review.rating}
               onChange={(_event, value) =>
-                setRestaurant({
-                  ...restaurant,
+                setReview({
+                  ...review,
                   rating: Number(value),
                 })
               }
@@ -130,10 +100,10 @@ function AddRestaurantDialog({
           <TextField
             variant="outlined"
             placeholder="Any comments?"
-            value={restaurant.comment}
+            value={review.comment}
             onChange={(event) => {
-              setRestaurant({
-                ...restaurant,
+              setReview({
+                ...review,
                 comment: event.target.value,
               });
             }}
@@ -144,7 +114,7 @@ function AddRestaurantDialog({
             onClick={() => write?.()}
             disabled={!write || isLoading}
           >
-            {isLoading ? <CircularProgress /> : "Add Restaurant"}
+            {isLoading ? <CircularProgress /> : "Add Review"}
           </Button>
         </Stack>
       </DialogContent>
@@ -152,4 +122,4 @@ function AddRestaurantDialog({
   );
 }
 
-export { AddRestaurantDialog };
+export { AddReviewDialog };
