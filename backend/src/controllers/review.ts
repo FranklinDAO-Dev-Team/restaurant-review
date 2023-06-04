@@ -6,9 +6,8 @@ import {
 } from "../models/review";
 
 const getFileFromIpfs = async (ipfsHash: string) => {
-  console.log(`${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsHash}`);
   const result = await fetch(
-    `${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsHash}`
+    `${process.env.IPFS_GATEWAY_URL}/ipfs/${ipfsHash}`
   );
 
   return result;

@@ -65,8 +65,13 @@ function AddReviewDialog({
   });
 
   useEffect(() => {
-    if (open && isSuccess) {
+    if (isSuccess) {
       setTimeout(() => {
+        setReview({
+          rating: 0,
+          comment: "",
+          files: [],
+        });
         onSuccess();
       }, 5000);
     }

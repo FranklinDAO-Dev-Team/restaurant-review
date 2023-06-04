@@ -69,6 +69,12 @@ function AddRestaurantDialog({
   useEffect(() => {
     if (isSuccess) {
       setTimeout(() => {
+        setRestaurant({
+          restaurantName: "",
+          restaurantAddress: "",
+          rating: 0,
+          comment: "",
+        });
         onSuccess();
       }, 5000);
     }
