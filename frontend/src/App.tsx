@@ -12,22 +12,21 @@ function App() {
         flexDirection: "column",
         width: "100vw",
         height: "100vh",
-        padding: "2rem",
+        padding: 3,
         margin: 0,
-        backgroundColor: "#282c34",
+        backgroundColor: "rgb(50, 50, 50)",
       }}
     >
       <Container
         sx={{
-          display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          justifyContent: "left",
           rowGap: "2rem",
         }}
         maxWidth={false}
       >
-        <Header />
         <BrowserRouter>
+          <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/:countryName/:cityName" element={<CityPage />} />

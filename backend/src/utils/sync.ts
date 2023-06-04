@@ -36,7 +36,7 @@ const getCoordinates = async (address: string): Promise<number[]> => {
   );
 
   const data = await response.json();
-  const location = data.features[0].center;
+  const location = data.features ? data.features[0].center : [0, 0];
   return location;
 };
 

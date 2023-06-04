@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { getRestaurantsByCountryAndCityNameFromDb } from "../models/restaurant";
+import {
+  getRestaurantByIdFromDb,
+  getRestaurantsByCountryAndCityNameFromDb,
+} from "../models/restaurant";
 
 const getRestaurantsByCountryAndCityName = async (
   req: Request,
@@ -13,4 +16,10 @@ const getRestaurantsByCountryAndCityName = async (
   res.send(result);
 };
 
-export { getRestaurantsByCountryAndCityName };
+const getRestaurantById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await getRestaurantByIdFromDb(Number(id));
+  res.send(result);
+};
+
+export { getRestaurantsByCountryAndCityName, getRestaurantById };

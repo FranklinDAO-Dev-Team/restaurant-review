@@ -18,11 +18,15 @@ const theme = createTheme({
         root: {
           color: "white",
           borderColor: "white",
+          backgroundColor: "rgba(40, 40, 40)",
           "&:hover": {
             color: "yellow",
             borderColor: "yellow",
-            backgroundColor: "transparent",
+            backgroundColor: "rgba(50, 50, 50)",
           },
+        },
+        outlined: {
+          backgroundColor: "transparent",
         },
       },
     },
@@ -30,8 +34,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           [`& .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: "white",
-            borderWidth: "1px",
+            color: "white",
+            fontSize: "1.5rem",
+            textAlign: "center",
           },
           [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
             borderColor: "yellow",
@@ -99,6 +104,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent",
+        },
+        circle: {
+          color: "white",
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -114,6 +129,57 @@ const theme = createTheme({
         root: {
           "&:last-child": {
             paddingBottom: "16px",
+          },
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "rgba(50, 50, 50)",
+          border: "solid",
+          borderColor: "yellow",
+          borderWidth: "2px",
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          textAlign: "center",
+        },
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          color: "yellow",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          "&:hover": {
+            backgroundColor: "rgba(40, 40, 40)",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "yellow",
+            color: "black",
+          },
+          "&.Mui-selected:hover": {
+            backgroundColor: "white",
           },
         },
       },

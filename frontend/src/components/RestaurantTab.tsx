@@ -36,7 +36,8 @@ function RestaurantTab({
               variant="h6"
               sx={{ color: "yellow", whiteSpace: "nowrap" }}
             >
-              {restaurant.averageRating} ({restaurant.numberOfReviews})
+              {Math.round(restaurant.averageRating * 10) / 10} (
+              {restaurant.numberOfReviews})
             </Typography>
           </Stack>
         </Stack>

@@ -1,48 +1,90 @@
-import { Card, CardContent, List, TextField } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { RestaurantTab } from "./RestaurantTab";
 import { Restaurant } from "../types/Restaurant";
+import { AddRestaurantButton } from "./AddRestaurantButton";
+import { AddRestaurantDialog } from "./AddRestaurantDialog";
 
 interface RestaurantsCardProps {
+  cityId: number;
   restaurants: Restaurant[];
   onRestaurantClick: (restaurant: Restaurant) => void;
+  reloadRestaurants: () => void;
 }
 
+const maxRestaurants = 5;
+
 function RestaurantsCard({
+  cityId,
   restaurants,
   onRestaurantClick,
+  reloadRestaurants,
 }: RestaurantsCardProps) {
   const [search, setSearch] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
+  const matchingRestaurants = restaurants.filter((restaurant) =>
+    restaurant.restaurantName.includes(search)
+  );
+
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <TextField
-          value={search}
-          variant="outlined"
-          placeholder="Search..."
-          sx={{ width: "100%", paddingBottom: "1rem" }}
-          onChange={onSearchChange}
-        />
-        <List sx={{ padding: 0 }}>
-          {restaurants
-            .filter((restaurant) => restaurant.restaurantName.includes(search))
-            .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
-            .slice(0, 6)
-            .map((restaurant) => (
-              <RestaurantTab
-                key={restaurant.id}
-                restaurant={restaurant}
-                onRestaurantClick={onRestaurantClick}
+    <>
+      <Card variant="outlined">
+        <CardContent>
+          <Box>
+            <Stack sx={{ padding: 0 }} spacing={1}>
+              <TextField
+                value={search}
+                variant="outlined"
+                placeholder="Search..."
+                sx={{ width: "100%" }}
+                onChange={onSearchChange}
               />
-            ))}
-        </List>
-      </CardContent>
-    </Card>
+              {matchingRestaurants
+                .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
+                .slice(0, maxRestaurants)
+                .map((restaurant) => (
+                  <RestaurantTab
+                    key={restaurant.id}
+                    restaurant={restaurant}
+                    onRestaurantClick={onRestaurantClick}
+                  />
+                ))}
+              {matchingRestaurants.length > maxRestaurants && (
+                <Typography
+                  variant="h5"
+                  align="center"
+                  sx={{ color: "gray", padding: "1rem" }}
+                >
+                  {matchingRestaurants.length - maxRestaurants} more...
+                </Typography>
+              )}
+              <AddRestaurantButton onClick={() => setDialogOpen(true)} />
+            </Stack>
+          </Box>
+        </CardContent>
+      </Card>
+      <AddRestaurantDialog
+        cityId={cityId}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSuccess={() => {
+          setDialogOpen(false);
+          reloadRestaurants();
+        }}
+      />
+    </>
   );
 }
 

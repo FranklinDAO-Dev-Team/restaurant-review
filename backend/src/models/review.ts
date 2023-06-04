@@ -1,11 +1,17 @@
 import { getDb } from "../utils/database";
 
+interface ReviewMetadata {
+  comment: string;
+  imageHashes: string[];
+}
+
 interface Review {
   id: number;
   reviewer: string;
   restaurantId: number;
   rating: number;
   metadata: string;
+  parsedMetadata?: ReviewMetadata;
 }
 
 const createReviewInDb = async (review: Review) => {
@@ -31,4 +37,9 @@ SELECT * FROM reviews WHERE restaurantId = ?
   return result as Review[];
 };
 
-export { Review, createReviewInDb, getReviewsByRestaurantIdFromDb };
+export {
+  Review,
+  ReviewMetadata,
+  createReviewInDb,
+  getReviewsByRestaurantIdFromDb,
+};

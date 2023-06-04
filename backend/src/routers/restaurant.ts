@@ -1,11 +1,16 @@
 import { Router } from "express";
-import { getRestaurantsByCountryAndCityName } from "../controllers/restaurant";
+import {
+  getRestaurantById,
+  getRestaurantsByCountryAndCityName,
+} from "../controllers/restaurant";
 
 const restaurantRouter = Router();
 
 restaurantRouter.get(
-  "/:countryName/:cityName",
+  "/all/:countryName/:cityName",
   getRestaurantsByCountryAndCityName
 );
+
+restaurantRouter.get("/:id", getRestaurantById);
 
 export { restaurantRouter };

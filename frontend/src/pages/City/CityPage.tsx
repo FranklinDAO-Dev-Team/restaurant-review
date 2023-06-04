@@ -2,7 +2,10 @@ import { Box, Grid, LinearProgress, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Restaurant } from "../../types/Restaurant";
-import { getRestaurantsByCountryAndCityName } from "../../routes/restaurants";
+import {
+  getRestaurantById,
+  getRestaurantsByCountryAndCityName,
+} from "../../routes/restaurants";
 import { RestaurantsCard } from "../../components/RestaurantsCard";
 import { RestaurantCard } from "../../components/RestaurantCard";
 import { RestaurantMap } from "../../components/RestaurantMap";
@@ -42,6 +45,19 @@ function CityPage() {
     setLoading(false);
     setCityData({ ...rawCityData, restaurants: restaurants });
     setActiveRestaurant(null);
+  };
+
+  const updateActiveRestaurant = async () => {
+    if (!activeRestaurant) return;
+
+    const updatedRestaurant = await getRestaurantById(activeRestaurant.id);
+    setCityData((prev) => ({
+      ...prev,
+      restaurants: prev.restaurants?.map((r) =>
+        r.id === updatedRestaurant.id ? updatedRestaurant : r
+      ),
+    }));
+    setActiveRestaurant(updatedRestaurant);
   };
 
   useEffect(() => {
@@ -89,12 +105,19 @@ function CityPage() {
         </Grid>
         <Grid item xs={4}>
           <RestaurantsCard
+            cityId={cityData.id}
             restaurants={restaurants}
             onRestaurantClick={onRestaurantClick}
+            reloadRestaurants={loadCityData}
           />
         </Grid>
         <Grid item xs={4}>
-          {activeRestaurant && <RestaurantCard restaurant={activeRestaurant} />}
+          {activeRestaurant && (
+            <RestaurantCard
+              restaurant={activeRestaurant}
+              onReviewAdded={updateActiveRestaurant}
+            />
+          )}
         </Grid>
       </Grid>
     </>

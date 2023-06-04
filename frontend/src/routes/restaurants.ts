@@ -6,7 +6,12 @@ export const getRestaurantsByCountryAndCityName = async (
   cityName: string
 ) => {
   const result = await axios.get(
-    `${BASE_SERVER_URL}/api/restaurants/${countryName}/${cityName}`
+    `${BASE_SERVER_URL}/api/restaurants/all/${countryName}/${cityName}`
   );
+  return result.data;
+};
+
+export const getRestaurantById = async (id: number) => {
+  const result = await axios.get(`${BASE_SERVER_URL}/api/restaurants/${id}`);
   return result.data;
 };

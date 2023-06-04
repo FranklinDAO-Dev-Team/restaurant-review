@@ -3,11 +3,11 @@ export interface BaseRestaurant {
   cityId: number;
   restaurantAddress: string;
   restaurantName: string;
-  longitude: number;
-  latitude: number;
 }
 
 export interface Restaurant extends BaseRestaurant {
+  longitude: number;
+  latitude: number;
   averageRating: number;
   numberOfReviews: number;
 }

@@ -3,48 +3,48 @@
         "name": "Flame Restaurant",
         "address": "16F, 6749 Ayala Ave, Makati, Metro Manila, Philippines",
         "rating": 5,
-        "review": "Great food and service! Check out the outdoor bar if it's open!"
+        "review": ""
     },
     {
         "name": "Mendokoro Ramenba Makati",
         "address": "125 L.P.Leviste Street, Makati, 1227 Metro Manila, Philippines",
         "rating": 5,
-        "review": "Best ramen in the Philippines!"
+        "review": ""
     },
     {
         "name": "Mantra Indian Kitchen & Bar",
         "address": "Grand Midori G-7, Bolanos, Legaspi Village, Makati, 1229 Metro Manila, Philippines",
         "rating": 4,
-        "review": "Very solid Indian food. Get the butter chicken!"
+        "review": ""
     },
     {
         "name": "East Ocean Palace Restaurant",
         "address": "Lot 37 Block 5 Aseana Business Park, Parañaque, Metro Manila, Philippines",
         "rating": 4,
-        "review": "Nostalgic Chinese food. Great for big groups!"
+        "review": ""
     },
     {
         "name": "Metronome",
         "address": "160 Bolanos, Legazpi Village, Makati, 1229 Kalakhang Maynila, Philippines",
         "rating": 5,
-        "review": "One of the best French restaurants in Manila!"
+        "review": ""
     },
     {
         "name": "Balai Palma",
         "address": "6081b R Palma, Makati, Metro Manila, Philippines",
         "rating": 5,
-        "review": "Amazing modern Filipino and fusion food!"
+        "review": ""
     },
     {
         "name": "Tsukiji",
         "address": "3F, Milky Way Building, 900 Antonio Arnaiz Ave, Makati, Metro Manila, Philippines",
         "rating": 4,
-        "review": "Best all-around Japanese food. Get the sushi and lunch specials!"
+        "review": ""
     },
     {
         "name": "Kazunori Japanese Restaurant",
         "address": "G/F, Mazda Makati Building, 2301 Chino Roces Ave, Makati, 1231 Metro Manila, Philippines",
         "rating": 4,
-        "review": "Great Japanese noodles and katsu curry."
+        "review": ""
     }
 ]
